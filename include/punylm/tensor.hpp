@@ -8,7 +8,7 @@ using Vector = Eigen::VectorXf;
 
 inline void xavier_uniform(Matrix &w, float gain = 1.0f, unsigned seed = 42) {
   int f_in = w.rows();
-  int f_out = w.columns();
+  int f_out = w.cols();
   float limit = gain * std::sqrt(6.0f / float(f_in + f_out));
 
   std::mt19937 rng(seed);
