@@ -1,9 +1,16 @@
-#include <Eigen/Dense>
 #include <iostream>
 
+#include "punylm/tokeniser.hpp"
+
 int main() {
-  Eigen::MatrixXf A(2, 2);
-  A << 1, 2, 3, 4;
-  std::cout << "A:\n" << A << "\n";
+  CharTokeniser t("data/vocab.txt");
+  auto test = t.encode("Hello");
+  for (auto x : test) {
+    std::cout << x << " ";
+  }
+  std::cout << "\n";
+  std::string output = t.decode(test);
+  std::cout << output << "\n";
+
   return 0;
 }
