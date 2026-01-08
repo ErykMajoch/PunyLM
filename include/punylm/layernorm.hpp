@@ -19,4 +19,4 @@ struct LayerNorm {
     float inv_std = 1.0f / std::sqrt(var + eps);
     x = gamma.array() * ((x.array() - mean) * inv_std) + beta.array();
   }
-}
+};
