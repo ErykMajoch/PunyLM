@@ -22,7 +22,7 @@ namespace punylm {
                 ptr_ = backend::cuda::device_malloc(n_);
                 backend::cuda::memset_zero(ptr_, n_);
 #else
-                PUNYLM_CHECK(false, "CUDA storage requested but CUDA support is disabled!")
+                PUNYLM_CHECK(false, "CUDA storage requested but CUDA support is disabled!");
 #endif
             }
         }
@@ -56,6 +56,8 @@ namespace punylm {
             } else {
 #ifdef PUNYLM_ENABLE_CUDA
                 backend::cuda::memset_zero(ptr_, n_);
+#else
+                PUNYLM_CHECK(false, "CUDA zero requested but CUDA support is disabled!");
 #endif
             }
         }
@@ -63,11 +65,14 @@ namespace punylm {
         // Host storage transfer
         void from_host(const std::vector<float> &v) {
             PUNYLM_CHECK(v.size() == n_, "from_host size mismatch!");
+            if (n_ == 0) return;
             if (device_ == Device::CPU) {
                 std::memcpy(ptr_, v.data(), n_ * sizeof(float));
             } else {
 #ifdef PUNYLM_ENABLE_CUDA
                 backend::cuda::copy_h2d(ptr_, v.data(), n_);
+#else
+                PUNYLM_CHECK(false, "CUDA copy requested but CUDA support is disabled!");
 #endif
             }
         }
@@ -80,6 +85,8 @@ namespace punylm {
             } else {
 #ifdef PUNYLM_ENABLE_CUDA
                 backend::cuda::copy_d2h(v.data(), ptr_, n_);
+#else
+                PUNYLM_CHECK(false, "CUDA copy requested but CUDA support is disabled!");
 #endif
             }
             return v;
@@ -93,6 +100,8 @@ namespace punylm {
             } else {
 #ifdef PUNYLM_ENABLE_CUDA
                 backend::cuda::device_free(ptr_);
+#else
+                PUNYLM_CHECK(false, "CUDA free requested but CUDA support is disabled!");
 #endif
             }
             ptr_ = nullptr;
