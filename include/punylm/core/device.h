@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 
-#define PUNYLM_CHECK(condition, message) [[unlikely]] if (!(condition)) throw ::punylm::Error(std::string("PunyLM: ") + (message));
+#define PUNYLM_CHECK(condition, message) ((condition) ? void(0) : throw ::punylm::Error(std::string("PunyLM: ") + (message)))
 
 namespace punylm {
 
