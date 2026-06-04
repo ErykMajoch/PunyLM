@@ -3,8 +3,6 @@
 #include <numeric>
 #include <vector>
 
-#include "punylm/core/device.h"
-
 namespace punylm {
     using Shape = std::vector<int64_t>;
 
@@ -13,5 +11,5 @@ namespace punylm {
     }
 
     inline int64_t last_dim(const Shape &s) { return s.empty() ? 1 : s.back(); }
-    inline int64_t rows_of(const Shape &s) { return s.empty() ? 1 : numel(s) / s.back(); }
+    inline int64_t rows_of(const Shape &s) { return s.size() <= 1 ? numel(s) : numel(s) / s.back(); }
 } // namespace punylm
