@@ -11,8 +11,8 @@ namespace punylm {
 
         void seed(std::uint64_t seed) { gen_.seed(seed); }
 
-        float normal(float mean, float std) {
-            return std::normal_distribution<float>(mean, std)(gen_);
+        float normal(float mean, float stddev) {
+            return std::normal_distribution<float>(mean, stddev)(gen_);
         }
 
         float uniform(float low, float high) {
