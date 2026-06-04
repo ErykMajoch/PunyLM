@@ -50,23 +50,23 @@ namespace punylm {
         }
 
         // Factories
-        static Tensor zeros(const Shape &s, Device device = Device::CPU, bool required = false) {
-            return Tensor(std::make_shared<TensorImpl>(s, device, required));
+        static Tensor zeros(const Shape &s, Device device = Device::CPU, bool requires_grad = false) {
+            return Tensor(std::make_shared<TensorImpl>(s, device, requires_grad));
         }
 
         static Tensor from_host(const Shape &s, const std::vector<float> &v, Device device = Device::CPU,
-                                bool required = false) {
-            auto t = zeros(s, device, required);
+                                bool requires_grad = false) {
+            auto t = zeros(s, device, requires_grad);
             t.impl_->data_.from_host(v);
             return t;
         }
 
-        static Tensor randn(const Shape &s, float std, Device device = Device::CPU, bool required = false) {
-            std::vector<float> v(static_cast<std::size_t>(numel(s)));
+        static Tensor randn(const Shape &s, float stddev, Device device = Device::CPU, bool requires_grad = true) {
+            std::vector<float> v(static_cast<std::size_t>(punylm::numel(s)));
             for (auto &x: v) {
-                x = RNG::global().normal(0.0f, std);
+                x = RNG::global().normal(0.0f, stddev);
             }
-            return from_host(s, v, device, required);
+            return from_host(s, v, device, requires_grad);
         }
 
         // Accessors
