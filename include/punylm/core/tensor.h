@@ -46,8 +46,7 @@ namespace punylm {
     public:
         Tensor() = default;
 
-        explicit Tensor(TensorPtr p) : impl_(std::move(p)) {
-        }
+        explicit Tensor(TensorPtr p) : impl_(std::move(p)) {}
 
         // Factories
         static Tensor zeros(const Shape &s, Device device = Device::CPU, bool requires_grad = false) {
@@ -131,14 +130,6 @@ namespace punylm {
             impl_->ensure_grad();
             std::vector<float> ones(static_cast<std::size_t>(numel()), 1.0f);
             impl_->grad_.from_host(ones);
-
-            // Walk in traverse, run each node's closure
-            for (auto it = topo.rbegin(); it != topo.rend(); it++) {
-                if ((*it)->backward_fn_) {
-                    (*it)->backward_fn_();
-                }
-            }
-        }
 
             // Walk in traverse, run each node's closure
             for (auto it = topo.rbegin(); it != topo.rend(); it++) {
