@@ -70,26 +70,53 @@ namespace punylm {
         }
 
         // Accessors
-        [[nodiscard]] const Shape &shape() const { return impl_->shape_; }
-        [[nodiscard]] int64_t numel() const { return impl_->numel(); }
-        [[nodiscard]] Device device() const { return impl_->device_; }
-        [[nodiscard]] bool requires_grad() const { return impl_->requires_grad_; }
+        [[nodiscard]] const Shape &shape() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->shape_;
+        }
+        [[nodiscard]] int64_t numel() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->numel();
+        }
+        [[nodiscard]] Device device() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->device_;
+        }
+        [[nodiscard]] bool requires_grad() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->requires_grad_;
+        }
         [[nodiscard]] const TensorPtr &impl() const { return impl_; }
         [[nodiscard]] bool defined() const { return static_cast<bool>(impl_); }
 
-        [[nodiscard]] float *data() { return impl_->data_.data(); }
-        [[nodiscard]] const float *data() const { return impl_->data_.data(); }
+        [[nodiscard]] float *data() {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->data_.data();
+        }
+        [[nodiscard]] const float *data() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->data_.data();
+        }
 
         [[nodiscard]] float *grad() {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
             impl_->ensure_grad();
             return impl_->grad_.data();
         }
 
-        [[nodiscard]] std::vector<float> to_host() const { return impl_->data_.to_host(); }
-        [[nodiscard]] std::vector<float> grad_to_host() const { return impl_->grad_.to_host(); }
+        [[nodiscard]] std::vector<float> to_host() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->data_.to_host();
+        }
+        [[nodiscard]] std::vector<float> grad_to_host() const {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            return impl_->grad_.to_host();
+        }
 
-        void zero_grad() { impl_->zero_grad(); }
-
+        void zero_grad() {
+            PUNYLM_CHECK(impl_, "Tensor is undefined!");
+            impl_->zero_grad();
+        }
         // Autograd entry point
         void backward() {
             // Post order DFS over parents
