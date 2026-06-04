@@ -84,7 +84,7 @@ PunyLM is a work in progress project! See the roadmap for currently implemented 
 ### Roadmap
 
 - [x] Build system, tooling, dependencies
-- [ ] Core: device abstraction, storage, RNG, autograd `Tensor` with backward tape
+- [x] Core: device abstraction, storage, RNG, autograd `Tensor` with backward tape
 - [ ] Backend operations: CPU kernels for the primitive autograd operations
 - [ ] NN modules: RoPE, multi-head causal attention, SwiGLU MLP, transformer block, `PunyLM` model
 - [ ] Tokeniser: character level and byte-level BPE (train / encode / decode / persist)

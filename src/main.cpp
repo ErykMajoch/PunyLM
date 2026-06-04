@@ -1,5 +1,11 @@
+#include <punylm/core/device.h>
+
 #include <iostream>
 
+using enum punylm::Device;
+
 int main() {
-    std::cout << "Hello World!" << std::endl;
+    constexpr auto device = CPU;
+    std::cout << "Hello World! Device: " << punylm::device_name(device) << '\n';
+    PUNYLM_CHECK(device == CPU, "Expected CPU device!");
 }
