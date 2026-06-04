@@ -39,14 +39,12 @@ TEST_CASE("Normal distribution produces finite values", "[rng]") {
     punylm::RNG::global().seed(12345);
 
     float sum = 0.0f;
-    float sum_sq = 0.0f;
     constexpr int N = 1000;
 
     for (int i = 0; i < N; ++i) {
         float v = punylm::RNG::global().normal(0.0f, 1.0f);
         CHECK(std::isfinite(v));
         sum += v;
-        sum_sq += v * v;
     }
 
     float mean = sum / static_cast<float>(N);
