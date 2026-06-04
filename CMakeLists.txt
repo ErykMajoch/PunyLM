@@ -3,7 +3,7 @@ project(PunyLM VERSION 0.1.0 LANGUAGES CXX)
 
 # Options
 option(PUNYLM_ENABLE_CUDA "Build the optional CUDA backend" OFF)
-option(PUNYLM_BUILD_TESTS "Build unit tests" OFF)
+option(PUNYLM_BUILD_TESTS "Build unit tests" ON)
 option(PUNYLM_ENABLE_ASAN "Enable Address/UB sanitisers (CPU)" OFF)
 option(PUNYLM_ENABLE_COVERAGE "Enable coverage instrumentation" OFF)
 option(PUNYLM_WERROR "Treat warnings as errors" OFF)
