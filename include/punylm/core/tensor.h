@@ -119,6 +119,9 @@ namespace punylm {
         }
         // Autograd entry point
         void backward() {
+            PUNYLM_CHECK(impl_, "backward() called on undefined Tensor!");
+            PUNYLM_CHECK(impl_->requires_grad_, "backward() called on Tensor with requires_grad=false!");
+
             // Post order DFS over parents
             std::vector<TensorImpl *> topo;
             std::unordered_set<TensorImpl *> seen;
@@ -128,6 +131,14 @@ namespace punylm {
             impl_->ensure_grad();
             std::vector<float> ones(static_cast<std::size_t>(numel()), 1.0f);
             impl_->grad_.from_host(ones);
+
+            // Walk in traverse, run each node's closure
+            for (auto it = topo.rbegin(); it != topo.rend(); it++) {
+                if ((*it)->backward_fn_) {
+                    (*it)->backward_fn_();
+                }
+            }
+        }
 
             // Walk in traverse, run each node's closure
             for (auto it = topo.rbegin(); it != topo.rend(); it++) {
